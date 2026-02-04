@@ -13,11 +13,11 @@ public class Main {
         while(true) {
             System.out.println("==== SISTEMA ACADÊMICO ====");
             System.out.println("""
-                    1 - Gerenciar Alunos\n
-                    2 - Gerenciar Professores\n
-                    3 - Gerenciar Provas\n 
-                    4 - Gerenciar Notas\n
-                    0 - Encerrar Sistema\n
+                    1 - Gerenciar Alunos
+                    2 - Gerenciar Professores
+                    3 - Gerenciar Provas
+                    4 - Gerenciar Notas
+                    0 - Encerrar Sistema
                     >
                     """);
             int opcao = SC.nextInt();
@@ -39,13 +39,13 @@ public class Main {
     public static void menuAluno(){
         while(true){
         System.out.println("""
-                ==== MENU DE ALUNOS ====\n
-                1 - Cadastrar Alunos\n
-                2 - Listar Alunos\n
-                3 - Buscar Alunos por ID\n
-                4 - Atualizar Aluno\n
-                5 - Remover Aluno\n
-                0 - Voltar ao menu principal\n
+                ==== MENU DE ALUNOS ====
+                1 - Cadastrar Alunos
+                2 - Listar Alunos
+                3 - Buscar Alunos por ID
+                4 - Atualizar Aluno
+                5 - Remover Aluno
+                0 - Voltar ao menu principal
                 >
               
                 """);
@@ -71,11 +71,11 @@ public class Main {
     public static void menuProfessores(){
         while(true){
             System.out.println("""
-                    ==== MENU DE PROFESSORES ====\n
-                    1 - Cadastrar Professor\n
-                    2 - Listar Professores\n
-                    3 - Buscar Professores por ID\n
-                    0 - Voltar ao menu principal\n
+                    ==== MENU DE PROFESSORES ====
+                    1 - Cadastrar Professor
+                    2 - Listar Professores
+                    3 - Buscar Professores por ID
+                    0 - Voltar ao menu principal
                     >
                     """);
             int opcao = SC.nextInt();
@@ -95,11 +95,11 @@ public class Main {
     public static void menuProvas(){
         while(true){
             System.out.println("""
-                    ==== MENU DE PROVAS ====\n
-                    1 - Lançar nota\n
-                    2 - Consultar nota\n
-                    3 - Emitir boletim do Aluno\n
-                    0 - Voltar ao menu principal\n
+                    ==== MENU DE PROVAS ====
+                    1 - Lançar nota
+                    2 - Consultar nota
+                    3 - Emitir boletim do Aluno
+                    0 - Voltar ao menu principal
                     >                   
                     """);
             int opcao = SC.nextInt();
@@ -119,11 +119,11 @@ public class Main {
     public static void menuNotas(){
         while(true){
             System.out.println("""
-                    ==== MENU NOTAS ====\n
-                    1 - Lançar nota\n
-                    2 - Consultar nota\n
-                    3 - Emitir boletim do aluno\n
-                    0 - Voltar ao menu principal\n
+                    ==== MENU NOTAS ====
+                    1 - Lançar nota
+                    2 - Consultar nota
+                    3 - Emitir boletim do aluno
+                    0 - Voltar ao menu principal
                    >
                     """);
         int opcao = SC.nextInt();
