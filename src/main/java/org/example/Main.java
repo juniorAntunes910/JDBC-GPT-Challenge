@@ -1,5 +1,9 @@
 package org.example;
 
+import org.example.DAO.AlunoDao;
+import org.example.Entidades.Aluno;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -23,6 +27,7 @@ public class Main {
             int opcao = SC.nextInt();
             switch (opcao) {
                 case 1:
+                    menuAluno();
                     break;
                 case 2:
                     break;
@@ -52,10 +57,13 @@ public class Main {
         int opcao = SC.nextInt();
         switch (opcao){
             case 1:
+                cadastrarAluno();
                 break;
             case 2:
+                listarAluno();
                 break;
             case 3:
+                buscarAlunoPorId();
                 break;
             case 4:
                 break;
@@ -140,6 +148,37 @@ public class Main {
         }
         }
 
+    }
+    //Menu Aluno
+    public static void cadastrarAluno(){
+        System.out.println("Digite o nome do aluno: ");
+        SC.nextLine();
+        String nome = SC.nextLine();
+        System.out.println("Digite o email do aluno: ");
+        String email = SC.nextLine();
+        System.out.println("Digite a idade do aluno: ");
+        int idade = SC.nextInt();
+        Aluno aluno = new Aluno(nome, email, idade);
+        var dao = new AlunoDao();
+        dao.salvar(aluno);
+        System.out.println("Aluno Cadastrado com sucesso - " + aluno.getNome());
+    }
+    public static void listarAluno(){
+        var Dao = new AlunoDao();
+        ArrayList<Aluno> listaAlunos = Dao.listarAluno();
+        for(Aluno aluno : listaAlunos){
+            System.out.println(aluno);
+        }
+    }
+    public static void buscarAlunoPorId(){
+        System.out.println("Insira o ID do Aluno que você deseja buscar: ");
+        int id = SC.nextInt();
+        var dao = new AlunoDao();
+        Aluno aluno = dao.buscaAlunoPorID(id);
+        if(aluno == null){
+            System.out.println("Aluno Não existe");
+        }
+        System.out.println(aluno);
     }
 }
 
