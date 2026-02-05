@@ -2,9 +2,13 @@ package org.example;
 
 import org.example.DAO.AlunoDao;
 import org.example.DAO.ProfessorDao;
+import org.example.DAO.ProvaDao;
 import org.example.Entidades.Aluno;
 import org.example.Entidades.Professor;
+import org.example.Entidades.Prova;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -113,19 +117,17 @@ public class Main {
         while(true){
             System.out.println("""
                     ==== MENU DE PROVAS ====
-                    1 - Lançar nota
-                    2 - Consultar nota
-                    3 - Emitir boletim do Aluno
+                    1 - Criar prova vinculada ao professor
+                    2 - Listar provas por professor
                     0 - Voltar ao menu principal
                     >                   
                     """);
             int opcao = SC.nextInt();
             switch (opcao){
                 case 1:
+                    criarProvas();
                     break;
                 case 2:
-                    break;
-                case 3:
                     break;
                 case 0:
                     inicio();
@@ -248,6 +250,19 @@ public class Main {
         var dao = new ProfessorDao();
         Professor professor = dao.buscarProfessorID(id);
         System.out.println(professor);
+    }
+    //Provas
+    public static void criarProvas(){
+        System.out.println("Insira o titulo da prova: ");
+        SC.nextLine();
+        String titulo = SC.nextLine();
+        System.out.println("Data de Hoje : " + LocalDate.now());
+        LocalDate data = LocalDate.now();
+        System.out.println("Insira o ID do Professor que esta criando a prova: ");
+        int idProfessor = SC.nextInt();
+        Prova prova = new Prova(titulo, data, idProfessor);
+        var dao = new ProvaDao();
+        dao.criarProva(prova);
     }
 }
 
