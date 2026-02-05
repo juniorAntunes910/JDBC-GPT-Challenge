@@ -67,4 +67,42 @@ public class AlunoDao {
         }
         return null;
     }
+
+    public void atualizarAluno(Aluno aluno) {
+        String sql = """
+                UPDATE aluno
+                SET nome = ?, email = ?, idade = ?
+                WHERE id = ?
+                """;
+        try (Connection conn = Conexao.conectar()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, aluno.getNome());
+            stmt.setString(2, aluno.getEmail());
+            stmt.setInt(3, aluno.getIdade());
+            stmt.setInt(4, aluno.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removerAluno(Aluno aluno) {
+        String sql = """
+                DELETE FROM nota
+                WHERE aluno_id = ?""";
+        String sql2 = """
+                DELETE FROM aluno
+                WHERE id = ?
+                """;
+        try (Connection conn = Conexao.conectar()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, aluno.getId());
+            stmt.executeUpdate();
+            stmt = conn.prepareStatement(sql2);
+            stmt.setInt(1, aluno.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

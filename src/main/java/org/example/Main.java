@@ -1,7 +1,9 @@
 package org.example;
 
 import org.example.DAO.AlunoDao;
+import org.example.DAO.ProfessorDao;
 import org.example.Entidades.Aluno;
+import org.example.Entidades.Professor;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -30,8 +32,10 @@ public class Main {
                     menuAluno();
                     break;
                 case 2:
+                    menuProfessores();
                     break;
                 case 3:
+                    menuProvas();
                     break;
                 case 4:
                     break;
@@ -66,8 +70,10 @@ public class Main {
                 buscarAlunoPorId();
                 break;
             case 4:
+                atualizarAluno();
                 break;
             case 5:
+                removerAluno();
                 break;
             case 0:
                 inicio();
@@ -89,10 +95,13 @@ public class Main {
             int opcao = SC.nextInt();
             switch (opcao){
                 case 1:
+                    cadastrarProfessor();
                     break;
                 case 2:
+                    listarProfessores();
                     break;
                 case 3:
+                    buscarProfessorPorID();
                     break;
                 case 0:
                     inicio();
@@ -179,6 +188,66 @@ public class Main {
             System.out.println("Aluno Não existe");
         }
         System.out.println(aluno);
+    }
+    public static void atualizarAluno(){
+        System.out.println("Insira o ID do Aluno que você deseja atualizar: ");
+        int id = SC.nextInt();
+        var dao = new AlunoDao();
+        Aluno aluno = dao.buscaAlunoPorID(id);
+        if(aluno == null) {
+            System.out.println("Aluno inexistente");
+            menuAluno();
+
+        }
+        System.out.println("Insira o novo nome do Aluno ");
+        SC.nextLine();
+        String novoNome = SC.nextLine();
+        System.out.println("Insira o novo email do Aluno: ");
+        String novoEmail = SC.nextLine();
+        System.out.println("Insira a nova Idade do Aluno: ");
+        int novaIdade = SC.nextInt();
+        aluno.setNome(novoNome);
+        aluno.setEmail(novoEmail);
+        aluno.setIdade(novaIdade);
+        dao.atualizarAluno(aluno);
+        System.out.println("Aluno atualizado com sucesso");
+    }
+    public static void removerAluno(){
+        System.out.println("Insira o ID do Aluno que você deseja remover: ");
+        int idRemove = SC.nextInt();
+        var dao = new AlunoDao();
+        Aluno alunoRemove = dao.buscaAlunoPorID(idRemove);
+        dao.removerAluno(alunoRemove);
+        System.out.println("Aluno Removido com sucesso");
+    }
+    //Menu Professor
+    public static void cadastrarProfessor(){
+        System.out.println("Insira o nome do Professor: ");
+        SC.nextLine();
+        String nome = SC.nextLine();
+        System.out.println("Insira o email do Professor: ");
+        String email = SC.nextLine();
+        System.out.println("Insira a area do Professor: ");
+        String area = SC.nextLine();
+        Professor professor = new Professor(nome, email, area);
+        var dao = new ProfessorDao();
+        dao.cadastrar(professor);
+
+    }
+    public static void listarProfessores(){
+        System.out.println("Lista de Professores: ");
+        var dao = new ProfessorDao();
+        ArrayList<Professor> listaProf = dao.listarProfessores();
+        for(Professor professor : listaProf){
+            System.out.println(professor);
+        }
+    }
+    public static void buscarProfessorPorID(){
+        System.out.println("Insira o ID do professor que você deseja achar: ");
+        int id = SC.nextInt();
+        var dao = new ProfessorDao();
+        Professor professor = dao.buscarProfessorID(id);
+        System.out.println(professor);
     }
 }
 
