@@ -264,5 +264,10 @@ public class Main {
         var dao = new ProvaDao();
         dao.criarProva(prova);
     }
+    public static void listarProvasPorProfessor(int id){
+        String sql = """
+                
+                """;
+    }
 }
 
