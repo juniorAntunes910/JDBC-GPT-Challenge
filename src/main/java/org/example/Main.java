@@ -3,10 +3,13 @@ package org.example;
 import org.example.DAO.AlunoDao;
 import org.example.DAO.ProfessorDao;
 import org.example.DAO.ProvaDao;
+import org.example.DAO.notaDao;
 import org.example.Entidades.Aluno;
+import org.example.Entidades.Nota;
 import org.example.Entidades.Professor;
 import org.example.Entidades.Prova;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,11 +19,13 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     static Scanner SC = new Scanner(System.in);
+
     public static void main(String[] args) {
         inicio();
     }
-        public static void inicio(){
-        while(true) {
+
+    public static void inicio() {
+        while (true) {
             System.out.println("==== SISTEMA ACADÊMICO ====");
             System.out.println("""
                     1 - Gerenciar Alunos
@@ -42,6 +47,7 @@ public class Main {
                     menuProvas();
                     break;
                 case 4:
+                    menuNotas();
                     break;
                 case 0:
                     System.exit(0);
@@ -49,45 +55,47 @@ public class Main {
             }
         }
     }
-    public static void menuAluno(){
-        while(true){
-        System.out.println("""
-                ==== MENU DE ALUNOS ====
-                1 - Cadastrar Alunos
-                2 - Listar Alunos
-                3 - Buscar Alunos por ID
-                4 - Atualizar Aluno
-                5 - Remover Aluno
-                0 - Voltar ao menu principal
-                >
-              
-                """);
-        int opcao = SC.nextInt();
-        switch (opcao){
-            case 1:
-                cadastrarAluno();
-                break;
-            case 2:
-                listarAluno();
-                break;
-            case 3:
-                buscarAlunoPorId();
-                break;
-            case 4:
-                atualizarAluno();
-                break;
-            case 5:
-                removerAluno();
-                break;
-            case 0:
-                inicio();
-                break;
 
-        }
+    public static void menuAluno() {
+        while (true) {
+            System.out.println("""
+                    ==== MENU DE ALUNOS ====
+                    1 - Cadastrar Alunos
+                    2 - Listar Alunos
+                    3 - Buscar Alunos por ID
+                    4 - Atualizar Aluno
+                    5 - Remover Aluno
+                    0 - Voltar ao menu principal
+                    >
+                    
+                    """);
+            int opcao = SC.nextInt();
+            switch (opcao) {
+                case 1:
+                    cadastrarAluno();
+                    break;
+                case 2:
+                    listarAluno();
+                    break;
+                case 3:
+                    buscarAlunoPorId();
+                    break;
+                case 4:
+                    atualizarAluno();
+                    break;
+                case 5:
+                    removerAluno();
+                    break;
+                case 0:
+                    inicio();
+                    break;
+
+            }
         }
     }
-    public static void menuProfessores(){
-        while(true){
+
+    public static void menuProfessores() {
+        while (true) {
             System.out.println("""
                     ==== MENU DE PROFESSORES ====
                     1 - Cadastrar Professor
@@ -97,7 +105,7 @@ public class Main {
                     >
                     """);
             int opcao = SC.nextInt();
-            switch (opcao){
+            switch (opcao) {
                 case 1:
                     cadastrarProfessor();
                     break;
@@ -113,8 +121,9 @@ public class Main {
             }
         }
     }
-    public static void menuProvas(){
-        while(true){
+
+    public static void menuProvas() {
+        while (true) {
             System.out.println("""
                     ==== MENU DE PROVAS ====
                     1 - Criar prova vinculada ao professor
@@ -123,11 +132,12 @@ public class Main {
                     >                   
                     """);
             int opcao = SC.nextInt();
-            switch (opcao){
+            switch (opcao) {
                 case 1:
                     criarProvas();
                     break;
                 case 2:
+                    listarProvasPorProfessor();
                     break;
                 case 0:
                     inicio();
@@ -135,33 +145,38 @@ public class Main {
             }
         }
     }
-    public static void menuNotas(){
-        while(true){
+
+    public static void menuNotas() {
+        while (true) {
             System.out.println("""
-                    ==== MENU NOTAS ====
-                    1 - Lançar nota
-                    2 - Consultar nota
-                    3 - Emitir boletim do aluno
-                    0 - Voltar ao menu principal
-                   >
+                     ==== MENU NOTAS ====
+                     1 - Lançar nota
+                     2 - Consultar nota
+                     3 - Emitir boletim do aluno
+                     0 - Voltar ao menu principal
+                    >
                     """);
-        int opcao = SC.nextInt();
-        switch (opcao){
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 0:
-                inicio();
-                break;
-        }
+            int opcao = SC.nextInt();
+            switch (opcao) {
+                case 1:
+                    lancarNota();
+                    break;
+                case 2:
+                    consultarNota();
+                    break;
+                case 3:
+                    emitirBoletimAluno();
+                    break;
+                case 0:
+                    inicio();
+                    break;
+            }
         }
 
     }
+
     //Menu Aluno
-    public static void cadastrarAluno(){
+    public static void cadastrarAluno() {
         System.out.println("Digite o nome do aluno: ");
         SC.nextLine();
         String nome = SC.nextLine();
@@ -174,29 +189,32 @@ public class Main {
         dao.salvar(aluno);
         System.out.println("Aluno Cadastrado com sucesso - " + aluno.getNome());
     }
-    public static void listarAluno(){
+
+    public static void listarAluno() {
         var Dao = new AlunoDao();
         ArrayList<Aluno> listaAlunos = Dao.listarAluno();
-        for(Aluno aluno : listaAlunos){
+        for (Aluno aluno : listaAlunos) {
             System.out.println(aluno);
         }
     }
-    public static void buscarAlunoPorId(){
+
+    public static void buscarAlunoPorId() {
         System.out.println("Insira o ID do Aluno que você deseja buscar: ");
         int id = SC.nextInt();
         var dao = new AlunoDao();
         Aluno aluno = dao.buscaAlunoPorID(id);
-        if(aluno == null){
+        if (aluno == null) {
             System.out.println("Aluno Não existe");
         }
         System.out.println(aluno);
     }
-    public static void atualizarAluno(){
+
+    public static void atualizarAluno() {
         System.out.println("Insira o ID do Aluno que você deseja atualizar: ");
         int id = SC.nextInt();
         var dao = new AlunoDao();
         Aluno aluno = dao.buscaAlunoPorID(id);
-        if(aluno == null) {
+        if (aluno == null) {
             System.out.println("Aluno inexistente");
             menuAluno();
 
@@ -214,7 +232,8 @@ public class Main {
         dao.atualizarAluno(aluno);
         System.out.println("Aluno atualizado com sucesso");
     }
-    public static void removerAluno(){
+
+    public static void removerAluno() {
         System.out.println("Insira o ID do Aluno que você deseja remover: ");
         int idRemove = SC.nextInt();
         var dao = new AlunoDao();
@@ -222,8 +241,9 @@ public class Main {
         dao.removerAluno(alunoRemove);
         System.out.println("Aluno Removido com sucesso");
     }
+
     //Menu Professor
-    public static void cadastrarProfessor(){
+    public static void cadastrarProfessor() {
         System.out.println("Insira o nome do Professor: ");
         SC.nextLine();
         String nome = SC.nextLine();
@@ -236,23 +256,26 @@ public class Main {
         dao.cadastrar(professor);
 
     }
-    public static void listarProfessores(){
+
+    public static void listarProfessores() {
         System.out.println("Lista de Professores: ");
         var dao = new ProfessorDao();
         ArrayList<Professor> listaProf = dao.listarProfessores();
-        for(Professor professor : listaProf){
+        for (Professor professor : listaProf) {
             System.out.println(professor);
         }
     }
-    public static void buscarProfessorPorID(){
+
+    public static void buscarProfessorPorID() {
         System.out.println("Insira o ID do professor que você deseja achar: ");
         int id = SC.nextInt();
         var dao = new ProfessorDao();
         Professor professor = dao.buscarProfessorID(id);
         System.out.println(professor);
     }
+
     //Provas
-    public static void criarProvas(){
+    public static void criarProvas() {
         System.out.println("Insira o titulo da prova: ");
         SC.nextLine();
         String titulo = SC.nextLine();
@@ -264,10 +287,48 @@ public class Main {
         var dao = new ProvaDao();
         dao.criarProva(prova);
     }
-    public static void listarProvasPorProfessor(int id){
-        String sql = """
-                
-                """;
-    }
-}
 
+    public static void listarProvasPorProfessor() {
+        System.out.println("Insira o ID do professor: ");
+        int id = SC.nextInt();
+        var dao = new ProvaDao();
+        ArrayList<Prova> listaProva = dao.listarProvasPorProfessor(id);
+        for (Prova prova : listaProva) {
+            System.out.println(prova);
+        }
+    }
+
+
+    //Menu Notas
+    public static void lancarNota() {
+        System.out.println("Insira o id do aluno que você deseja lançar a nota: ");
+        int id = SC.nextInt();
+        System.out.println("Insira o id da prova que você deseja associar ao aluno: ");
+        int id_prova = SC.nextInt();
+        System.out.println("Insira a nota da prova do aluno: ");
+        double nota = SC.nextDouble();
+        Nota notaObj = new Nota(id, id_prova, nota);
+        var dao = new notaDao();
+        dao.lancarNota(notaObj);
+
+
+    }
+
+    public static void consultarNota() {
+        System.out.println("Insira o Id da prova que você deseja consultar a nota: ");
+        int id = SC.nextInt();
+        var dao = new notaDao();
+        Nota nota = dao.emitirBoletim(id);
+        System.out.println(nota);
+    }
+    public static void emitirBoletimAluno(){
+        System.out.println("Insira o Id da prova que você deseja consultar a nota: ");
+        int id = SC.nextInt();
+        var dao = new notaDao();
+        ArrayList<Nota> nota = dao.consultarNota(id);
+        for(Nota nota1: nota){
+            System.out.println(nota1);
+        }
+    }
+
+}
